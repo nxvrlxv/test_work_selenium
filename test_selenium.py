@@ -64,8 +64,8 @@ for name, link in company_links:
         inst_face = overlay.find_elements(By.CSS_SELECTOR, ".css-6cxgxb")
         instagram = "-"
         facebook = "-"
-        for link in inst_face:
-            href = link.get_attribute("href")
+        for linkk in inst_face:
+            href = linkk.get_attribute("href")
             if "instagram.com" in href:
                 instagram = href
             if "facebook.com" in href:
@@ -73,45 +73,51 @@ for name, link in company_links:
 
         # print(f"{website}: {phone}")
         
-        # print(f"Instagram: {instagram}")
-        # print(f"Facebook: {facebook}")
+        print(f"Instagram: {instagram}")
+        print(f"Facebook: {facebook}")
     except:
         website = '-'
         phone = '-'
-
+    
     try:
         driver.get(link)
-        time.sleep(3)
+        time.sleep(4)
         min_spend = driver.find_element(By.CSS_SELECTOR, ".css-1nmdp34").text
+        print(min_spend)
     except:
         min_spend = '-'
 
 
     #meet the team
+    driver.get(link)
+    time.sleep(4)
     team_members = []
     try:
-        team_container = driver.find_element(By.CSS_SELECTOR, ".css-1i7dbin")
         while True:
-            try:
-                member_name = team_container.find_element(By.CSS_SELECTOR, ".css-1ham2m0").text.strip()
-            except:
+            
+            member_name = driver.find_element(By.CSS_SELECTOR, ".css-1ham2m0").text
+            print(member_name)
+            if member_name is None:
                 member_name = "-"
-            try:
-                members_job_title = team_container.find_element(By.CSS_SELECTOR, ".css-1pxun7d").text.strip()
-            except:
+            
+            member_container = driver.find_element(By.CSS_SELECTOR, ".css-5peb2r")
+            members_job_title = member_container.find_element(By.CSS_SELECTOR, ".css-1pxun7d").text.strip()
+            print(members_job_title)
+            if members_job_title is None:
                 members_job_title = "-"
             
+           
             team_members.append((member_name, members_job_title))
 
-            try:
-                next_button = team_container.find_element(By.CSS_SELECTOR, ".css-1qz0g1e")
-            except:
+            
+            next_buttons = driver.find_elements(By.CSS_SELECTOR, ".css-1qz0g1e")
+            if next_buttons[1] is None:
                 break
 
-            if "disabled" in next_button.get_attribute("class"):
+            if next_buttons[1].get_attribute("disabled"):
                 break
 
-            next_button.click()
+            ActionChains(driver).move_to_element(next_buttons[1]).click().perform()
             time.sleep(2)
     except:
         pass
@@ -121,10 +127,9 @@ for name, link in company_links:
         for member_name, members_job_title in team_members:
             data.append({
                 "Company Name": name,
-                "Company Link": link,
                 "Website": website,
                 "Phone": phone,
-                "Email": 'mailto:contact@partyslate.com',
+                "Email": 'contact@partyslate.com',
                 "Instagram": instagram,
                 "Facebook": facebook,
                 "Min Spend": min_spend,
@@ -133,10 +138,9 @@ for name, link in company_links:
     else:
         data.append({
                 "Company Name": name,
-                "Company Link": link,
                 "Website": website,
                 "Phone": phone,
-                "Email": 'mailto:contact@partyslate.com',
+                "Email": 'contact@partyslate.com',
                 "Instagram": instagram,
                 "Facebook": facebook,
                 "Min Spend": min_spend,
