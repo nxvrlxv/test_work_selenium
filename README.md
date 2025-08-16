@@ -1,10 +1,15 @@
-#What is this?
+This is my test exercise.
 
-This is my test exersize. I needed to write script (on python obviously), which is parcing 50 event agencies in Miami area. 
-There are information about them, export in .xlsx format, such as:
--Company Name
--company website
--email of partyslate
--Minimum spend
--Soical links(Inst, facebook)
--Team members information (name and job title)
+I needed to write a script (in Python, obviously) that parses data from 50 event agencies in the Miami area. The script extracts information about these agencies and exports it in .xlsx format, including the following details:
+
+Company Name
+
+Company Website
+
+Email (from Partyslate)
+
+Minimum Spend
+
+Social Links (Instagram, Facebook)
+
+Team Members’ Information (Names and Job Titles)
